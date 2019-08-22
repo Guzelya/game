@@ -22,6 +22,21 @@ class Player extends Component {
 
     // direction vector is initialized to point in the same direction of the head of the bird
     let direction = new THREE.Vector3(1, 0, 0);
+    let block = false;
+    const pos = this.gameObject.transform.position.clone();
+    pos.y += 30;
+    let raycaster = new THREE.Raycaster(pos, direction);
+    for ( let obstacle of globals.obstacles){
+      const intersect = raycaster.intersectObjects(obstacle.gameObject);
+      if( intersect.length > 0){
+        if(intersect[0].distance < 50){
+          block = true;
+          break;
+        }
+      }
+    }
+    
+    
 
     // rotate 10 degrees on right arrow key press
     if (inputManager.keys.right.down) {
@@ -41,7 +56,7 @@ class Player extends Component {
     }
 
     // move in direction of head by one unit
-    if (inputManager.keys.up.down) {
+    if (inputManager.keys.up.down && !block) {
       transform.translateOnAxis(direction, 1);
     }
 
@@ -63,4 +78,6 @@ class Player extends Component {
     //camera is always facing player
     globals.camera.lookAt(this.gameObject.transform.position);
   }
+
+
 }
