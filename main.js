@@ -177,6 +177,13 @@ function main() {
       gameObject.transform.position.x = 25;
       gameObject.transform.position.z = -105;
     }
+    {
+      const gameObject = gameObjectManager.createGameObject(scene, "monster");
+      globals.monster = gameObject.addComponent(Obstacle, models["monster"]);
+      gameObject.transform.position.x = 35;
+      gameObject.transform.position.z = -125;
+      globals.obstacles.push(globals.monster);
+    }
 
     {
       const gameObject = gameObjectManager.createGameObject(scene, "venus");
